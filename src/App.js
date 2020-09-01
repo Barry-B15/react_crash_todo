@@ -37,12 +37,19 @@ class App extends Component {
             })
         });
     }
+
+    //Delete Todo
+    delTodo = (id) => {
+        //console.log(id)
+        this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)] });
+    }
     render() {
         console.log(this.state.todos); // access the state
         return ( < div className = "App" >
             <
             Todos todos = { this.state.todos }
             markComplete = { this.markComplete }
+            delTodo = { this.delTodo }
             />   < /
             div >
         );
