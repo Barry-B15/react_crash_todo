@@ -1,24 +1,28 @@
 //import React from 'react';
 import React, { Component } from 'react'; //this is what the video has, mine is the above
+import Header from "./components/layout/Header"; // import the header here
 import Todos from "./components/Todos";
+import AddTodo from "./components/AddTodo";
 import './App.css';
+//import uuid from 'uuid';
+import { v4 as uuid } from "uuid";
 
 
 // the video:
 class App extends Component {
     state = { // create the state
         todos: [{
-                id: 1,
+                id: uuid(),
                 title: 'Take out the trash',
                 completed: false
             },
             {
-                id: 2,
+                id: uuid(),
                 title: 'Dinner with family',
                 completed: true
             },
             {
-                id: 3,
+                id: uuid(),
                 title: 'Meeting with boss',
                 completed: false
             },
@@ -43,15 +47,35 @@ class App extends Component {
         //console.log(id)
         this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)] });
     }
+
+    // Add Todo (Submit)
+    addTodo = (title) => {
+        //console.log(title)
+        // def a new todo
+        const newTodo = {
+            id: uuid(),
+            title, //since title: title are same word
+            completed: false
+        }
+        this.setState({ todos: [...this.state.todos, newTodo] })
+    }
     render() {
         console.log(this.state.todos); // access the state
-        return ( < div className = "App" >
+        return ( <
+            div className = "App" >
             <
+            div className = "container" >
+            <
+            Header / >
+            <
+            AddTodo addTodo = { this.addTodo }
+            / > <
             Todos todos = { this.state.todos }
             markComplete = { this.markComplete }
             delTodo = { this.delTodo }
-            />   < /
-            div >
+            / > < /
+            div > <
+            /div >
         );
     }
 }
