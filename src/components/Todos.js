@@ -22,17 +22,10 @@ class Todos extends Component {
 
 // define prop-types just below the class
 Todos.propTypes = {
-    todos: PropTypes.array.isRequired
+    todos: PropTypes.array.isRequired,
+    markComplete: PropTypes.func.isRequired,
+    delTodo: PropTypes.func.isRequired,
 }
 
-
-// function Todos() { // original code format
-//     return ( <
-//         div >
-//         <
-//         h1 > Todos < /h1>   <
-//         /div >
-//     );
-// }
 
 export default Todos;

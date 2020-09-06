@@ -5,31 +5,24 @@ import Header from "./components/layout/Header"; // import the header here
 import Todos from "./components/Todos";
 import AddTodo from "./components/AddTodo";
 import About from "./components/pages/About";
+import axios from "axios";
 
 import './App.css';
-//import uuid from 'uuid';
-import { v4 as uuid } from "uuid";
+//import uuid from 'uuid'; // this didn't work 
+//import { v4 as uuid } from "uuid"; // this worked
 
 
 // the video:
 class App extends Component {
     state = { // create the state
-        todos: [{
-                id: uuid(),
-                title: 'Take out the trash',
-                completed: false
-            },
-            {
-                id: uuid(),
-                title: 'Dinner with family',
-                completed: true
-            },
-            {
-                id: uuid(),
-                title: 'Meeting with boss',
-                completed: false
-            },
-        ]
+        todos: []
+    }
+
+    // use a 2nd life-cycle componentDidMount()
+    componentDidMount() {
+        axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10').then(res => this.setState({ todos: res.data }))
+            // https://jsonplaceholder.typicode.com/users/1/todos?_limit=10  // also works (from site, above from video) 
+
     }
 
     // define mark complete and toggle complete
@@ -47,20 +40,18 @@ class App extends Component {
 
     //Delete Todo
     delTodo = (id) => {
-        //console.log(id)
-        this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)] });
+        axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+            .then(res => this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)] }));
+        // https://jsonplaceholder.typicode.com/users/1/todos?_limit=10  // also works (from site, above from video) but didn't work for delete
     }
 
     // Add Todo (Submit)
     addTodo = (title) => {
-        //console.log(title)
-        // def a new todo
-        const newTodo = {
-            id: uuid(),
-            title, //since title: title are same word
+        axios.post('https://jsonplaceholder.typicode.com/todos', {
+            title, // short for title: title,
             completed: false
-        }
-        this.setState({ todos: [...this.state.todos, newTodo] })
+        }).then(res => this.setState({ todos: [...this.state.todos, res.data] }));
+
     }
     render() {
         //console.log(this.state.todos); // access the state

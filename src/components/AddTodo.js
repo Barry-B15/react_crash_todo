@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from "prop-types";
 
 export class AddTodo extends Component {
     // add the form as a piece of state, set the title to null by default
@@ -49,6 +50,11 @@ export class AddTodo extends Component {
             /form>
         )
     }
+}
+
+// define prop-types just below the class
+AddTodo.propTypes = {
+    addTodo: PropTypes.func.isRequired
 }
 
 export default AddTodo
